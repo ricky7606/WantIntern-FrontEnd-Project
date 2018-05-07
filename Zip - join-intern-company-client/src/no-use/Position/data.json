@@ -1,0 +1,56 @@
+{
+  "pagination": {
+    "pageSize": 0,
+    "pageCnt": 0,
+    "pageIndex": 0,
+    "rowCnt": 0
+  },
+  "items": [
+    {
+      "id": 123,
+      "title": "title",
+      "area": "area",
+      "addr": "string",
+      "startDate": "2017-09-01",
+      "endDate": "2017-10-01",
+      "startTime": "08:00:00",
+      "endTime": "18:00:00",
+      "salary": 200,
+      "unit": "元/天",
+      "minDays": 0,
+      "continuous": true,
+      "count": 0,
+      "retention": true,
+      "intro": "职位简介",
+      "reqGender": "MALE",
+      "reqEdu": "COLLEGE",
+      "reqGrade": 0,
+      "reqMajor": "reqMajor",
+      "reqLang": "reqLang",
+      "reqLangLevel": "NORMAL",
+      "companyId": 0,
+      "company": {
+        "id": 123,
+        "accountId": 456,
+        "account": {
+          "phone": "18810203423",
+          "password": "password"
+        },
+        "name": "Google Inc.",
+        "addr": "No123 Bake Street",
+        "type": "民营",
+        "scale": "scale",
+        "contact": "公司联系人",
+        "contactPhone": "string",
+        "email": "string",
+        "phone": "string",
+        "industry": "string",
+        "code": "string",
+        "intro": "string",
+        "createTime": "2017-10-01 08:00:00"
+      },
+      "stuSalary": 150,
+      "createTime": "2017-10-01 08:00:00"
+    }
+  ]
+}

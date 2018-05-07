@@ -1,0 +1,4 @@
+build/*.js
+config/*.js
+src/utils/kindeditor/lang/*.js
+src/utils/kindeditor/*.js
