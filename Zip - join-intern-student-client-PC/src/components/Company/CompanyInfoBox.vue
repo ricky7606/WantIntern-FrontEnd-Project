@@ -15,7 +15,7 @@
           未认证
           <span class="gray">（该账号未经认证，可能存在风险）</span>
         </div>
-        <div class="link">
+        <div class="link"><!-- 公司官网显示 -->
           <a target="_blank" :href="parseLink(company.link)">{{company.link}}</a>
         </div>
       </div>
@@ -45,7 +45,8 @@
         return str && str.indexOf('http') === 0
       },
       parseLink (link) {
-        if (!link) return ''
+        // if (!link) return ''
+        if (link === '(未填写)' || !link) return ''
         return link.indexOf('http') !== -1 ? link : `http://${link}`
       },
     },

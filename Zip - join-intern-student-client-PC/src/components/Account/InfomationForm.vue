@@ -242,6 +242,7 @@
       },
       uploadStudentInfo (cbfn = res => res) {
         const isIDCard = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
+        // const isIDCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/
         let list1 = [...this.PersonalInfomation, ...this.EducationInfomation, ...this.OtherInformation]
         // let readyToSubmit = true
         for (let i = 0; i < list1.length; i++) {

@@ -50,7 +50,9 @@
         "createTime": "2017-10-01 08:00:00"
       },
       "stuSalary": 150,
-      "createTime": "2017-10-01 08:00:00"
+      "createTime": "2017-10-01 08:00:00",
+      "remarkComp": "string"// 企业备注
+      "remarkStu": "string"// 学生备注
     }
   ]
 }

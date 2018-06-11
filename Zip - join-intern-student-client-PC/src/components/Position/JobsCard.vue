@@ -13,7 +13,7 @@
         发布于<span class="time">{{job.createTime}}</span>
       </div>
     </div>
-
+		<!-- 职位详细 右边栏 -->
     <div class="right flex-col">
       <div class="flex-row company-title" @click.stop="selectCompany">
         <span class="auth" :style="imgBg(Img.icon1)" v-if="company.verified"></span>

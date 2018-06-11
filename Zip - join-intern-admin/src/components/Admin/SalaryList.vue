@@ -146,8 +146,11 @@
           ENDED: '已结束'
         },
         mapReqPaidState: {
-          PAID: '已支付',
           NEW_GENERATED: '新增',
+          WAIT_STU_CONFIRM: '待学生确认',
+          WAIT_COMP_CONFIRM: '待企业确认',
+          CONFIRMED: '已确认',
+          PAID: '已支付',
           ENDED: '已结束'
         },
 

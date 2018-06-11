@@ -42,6 +42,7 @@
                           :tag="selectedItemKey"/>
 
         <enterprise-list v-if="selectedMode === 'api-item' && selectedItemKey === 'enterprise-list'"/>
+        <!-- <position-list v-if="selectedMode === 'api-item' && selectedItemKey === 'position-list'"/> -->
         <student-list v-if="selectedMode === 'api-item' && selectedItemKey === 'student-list'"/>
         <salary-list v-if="selectedMode === 'api-item' && selectedItemKey === 'salary-list'"/>
         <withdraw-list v-if="selectedMode === 'api-item' && selectedItemKey === 'withdraw-list'"/>
@@ -72,6 +73,7 @@
   import SalaryList from '@/components/Admin/SalaryList.vue'
   import StudentList from '@/components/Admin/StudentList.vue'
   import WithdrawList from '@/components/Admin/WithdrawList.vue'
+  // import PositionList from '@/components/Admin/PositionList.vue'
 
   import HelpNewsEditor from '@/components/Admin/HelpNewsEditor.vue'
 
@@ -205,6 +207,7 @@
       SalaryList,
       StudentList,
       WithdrawList,
+      // PositionList,
       AdminList,
       Message,
       Feedback,

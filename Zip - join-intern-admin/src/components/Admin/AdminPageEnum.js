@@ -145,8 +145,14 @@ export const AdminPageCategoryList = [
         title: '企业列表',
         key: 'enterprise-list',
         type: 'api-item',
-        path: 'enterprise-list'
+        path: 'enterprise-list',
       },
+      /* {
+        title: '职位列表',
+        key: 'position-list',
+        type: 'api-item',
+        path: 'position-list'
+      }, */
     ],
   },
   {

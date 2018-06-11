@@ -20,7 +20,7 @@
             <td class="title">{{item.account.balance}}</td>
             <td class="title">{{parseDateString(item.createTime)}}</td>
             <td class="title">{{parseItemState(item.state)}}</td>
-
+            <!-- 初审操作 -->
             <td class="action" v-if="item.state === 'NEW'">
               <div class="btn col plain warning"
                 @click="refuseWithdraw(item)">
@@ -29,6 +29,13 @@
               <div class="btn col plain btn-enable"
                 @click="passWithdraw(item)">
                 通过
+              </div>
+            </td>
+            <!-- 二审操作 -->
+            <td class="action" v-if="item.state === 'REFUSED'">
+            	<div class="btn col plain btn-enable"
+                @click="passWithdraw(item)">
+                二审通过
               </div>
             </td>
           </tr>
@@ -91,6 +98,7 @@
           },
           res => {
             this.parseData(res)
+            // this.queryCont(res)
             // console.log(res)
           },
           fail => {
@@ -105,7 +113,7 @@
           }
         )
       },
-      changeWithdrawState (item, state, cbfn = x => x) {
+      changeWithdrawState (item, state, cbfn = x => x) { // 提现审批函数
         let id = item.id
         let url = ReqUrl.Account.putWithdraws(id)
         Req.Put(
@@ -116,7 +124,9 @@
             cbfn(res)
           },
           fail => {
+            alert(fail.response.data.userMessage)
             console.log(fail)
+            this.pageIndexChange(this.pagination.current)
           }
         )
       },
@@ -171,10 +181,20 @@
           PASSED: '通过',
           REFUSED: '拒绝',
           PAID: '已支付',
+          AGAINREFUSED: '二审失败',
         }
-
         return map[state]
       },
+      // queryCont (item) {
+      //   let id = item.account.id
+      //   let url = ReqUrl.Account.queryExistence(id)
+      //   Req.Get(
+      //     url,
+      //     res => {
+      //       this.Number = res
+      //     },
+      //   )
+      // },
     }
   }
 </script>

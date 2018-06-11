@@ -12,8 +12,10 @@ export function joinWechatAuthUrl (d) {
   let baseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?'
   let { appid, redirectUri, scope, state } = d
 
-  scope = scope || 'snsapi_base'
+  // scope = scope || 'snsapi_base'
+  scope = scope || 'snsapi_userinfo'
   redirectUri = encodeURIComponent(redirectUri)
   state = state || Math.random().toString().substr(2)
+  // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3157ff5481ec5025&redirect_uri=http%3A%2F%2Fwww.xiangshixi.com%2Fwechat%2F&response_type=code&scope=snsapi_base&state=37419436168778564
   return `${baseUrl}appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`
 }

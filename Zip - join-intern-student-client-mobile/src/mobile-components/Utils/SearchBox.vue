@@ -32,7 +32,6 @@
     methods: {
       search () {
         let word = this.stateValue
-
         this.$emit('keyword', word)
         this.$emit('input', word)
       },

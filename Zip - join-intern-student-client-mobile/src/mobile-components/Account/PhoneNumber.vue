@@ -208,7 +208,7 @@
 
         this.getTokenNumberHintText = '正在发送'
 
-        sendTokenNumber(phoneNumber, res => {
+        sendTokenNumber(phoneNumber, res => {  // 调用 发送验证码方法
           Storage.Set({
             time
           })
@@ -245,7 +245,7 @@
     }
   }
 
-  function sendTokenNumber (phoneNumber, cbfn = res => res, fail = res => res) {
+  function sendTokenNumber (phoneNumber, cbfn = res => res, fail = res => res) { // 发送验证码
     Req.Post(ReqUrl.OtherSubUrl.postCodes(`?phone=${phoneNumber}`),
       '',
       cbfn,

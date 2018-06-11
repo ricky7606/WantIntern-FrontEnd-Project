@@ -49,6 +49,31 @@
         "intro": "string",
         "createTime": "2017-10-01 08:00:00"
       },
+      "student": {
+          "id": 123,
+          "name": "string",
+          "idNo": "123456487",
+          "education": "COLLEGE",
+          "gender": "MAN",
+          "phone": "1234567890",
+          "email": "邮箱",
+          "school": "中国大学",
+      },
+      "position": {
+          "id": 132,
+          "title": "string",
+          "addr": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "startTime": "string",
+          "endTime": "string",
+          "minDays": 12,
+          "reqEdu": "string",
+          "createTime": "2017-10-01 08:00:00",
+          "company": {
+              "name": "string", 
+          }
+      },
       "stuSalary": 150,
       "createTime": "2017-10-01 08:00:00"
     }

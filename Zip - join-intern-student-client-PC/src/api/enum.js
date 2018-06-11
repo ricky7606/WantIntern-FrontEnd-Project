@@ -27,6 +27,7 @@ export const mapPhotoType = {
 //     企业确认结束 -> 6
 // 6 - 实习结束 ENDED
 // 7 - 实习未进行 CANCELED
+// 8 - 查询所有记录 HISTORY
 export const mapResumeState = {
   NEW: 'NEW',
   WAIT_STU_CONFIRM: 'WAIT_STU_CONFIRM',
@@ -37,6 +38,7 @@ export const mapResumeState = {
   ENDED: 'ENDED',
   CANCELED: 'CANCELED',
   COMMENTED: 'COMMENTED',
+  HISTORY: 'HISTORY',
 
   list: [
     'NEW',
@@ -48,6 +50,7 @@ export const mapResumeState = {
     'ENDED',
     'CANCELED',
     'COMMENTED',
+    'HISTORY',
   ]
 }
 // "id": 123,

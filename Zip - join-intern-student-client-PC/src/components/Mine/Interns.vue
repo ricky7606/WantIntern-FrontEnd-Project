@@ -11,7 +11,7 @@
             @click="changeTab(tab)"
             :class="{selected: selectedTab.title === tab.title}">
             {{tab.title}}
-            <span class="num" :class="{hasNew: lastCountDict[tab.title] !== countDict[tab.title]}">
+            <span class="num" :class="{hasNew: lastCountDict[tab.title] !== countDict[tab.title]}" v-if="tab.title !== '所有记录'">
               {{countDict && countDict[tab.title]}}
             </span>
           </div>
@@ -27,8 +27,8 @@
           <div class="list-item">
             <div class="row space-between">
               <div class="left col">
-                <div class="title col pointer-on" @click="gotoPosition(item.position)">{{item.position.title}}</div>
-                <div class="salary col">{{item.position.stuSalary}}{{item.position.unit}}</div>
+                <div class="title col pointer-on" @click="gotoPosition(item.position)">{{item.position.title}}</div><!-- 职位名称 -->
+                <div class="salary col">{{item.position.stuSalary}}{{item.position.unit}}</div><!-- 薪资 与 计算单位 -->
               </div>
               <div class="right col">
                 <div class="state-text col pointer-on"
@@ -41,12 +41,18 @@
             </div>
             <div class="row space-between">
               <div class="left col">
-                <span class="col degree">{{mapReqEdu[item.position.reqEdu]}}</span>
-                <span class="col major">{{item.position.reqMajor}}</span>
+              	<!-- <a class="col major"
+                  target="_blank"
+                  :href="`/#/CompanyInfo/${item.position.company.id}`">
+                  {{ item.company.name }} |
+                </a> -->
+                <span class="col major">{{item.position.company.name}} |</span><!-- 公司名回显 -->
+                <span class="col degree">{{mapReqEdu[item.position.reqEdu]}}</span><!-- 职位学历回显 -->
+                <!--  -->
               </div>
               <!-- 提示信息 -->
               <div class="right col interview-msg" v-show="showWorkingItem(item)">
-                实习补贴将于次月10-20日间发放
+              	实习补贴将于次月10-20日间发放
               </div>
               <!-- 面试信息 -->
               <div class="right col interview-msg" v-show="showInterviewMsg(item)">
@@ -54,7 +60,8 @@
                 <span class="row">面试地点：{{ item.interviewPlace }}</span>
                 <span class="row"> 联系人： {{ item.contact }}</span>
                 <span class="row">联系电话：{{ item.contactPhone }}</span>
-                <span class="row" v-if="item.commentComp">备注信息：{{ item.commentComp }}</span>
+                <!-- 企业备注回显 -->
+                <span class="row" v-if="item.remarkComp">备注信息：{{ item.remarkComp }}</span>
               </div>
               <!-- Offer信息 -->
               <div class="right col offer-msg" v-show="showOfferMsg(item)">
@@ -62,11 +69,15 @@
                 <span class="row">报到地点：{{ item.offerPlace }}</span>
                 <span class="row">联系人： {{ item.contact }}</span>
                 <span class="row">联系电话：{{ item.contactPhone }}</span>
-                <span class="row" v-if="item.commentComp">备注信息：{{ item.commentComp }}</span>
+                <!-- offer中暂无企业备注 -->
+                <!-- <span class="row" v-if="item.remarkComp">备注信息：{{ item.remarkComp }}</span> -->
               </div>
             </div>
-            <div class="row time">
-              {{item.createTime}}
+            <div class="row time" v-if="item.offerTime === null">
+              {{item.createTime}} 发布<!-- 职位创建时间 -->
+            </div>
+            <div class="row time" v-if="item.offerTime !== null">
+            	{{item.offerTime}} 开始实习
             </div>
           </div>
         </template>
@@ -86,7 +97,8 @@
           <date-time-selector v-model="confirmInterviewTime"/>
 
           <div class="row">
-            备注信息： <input style="width: 100%;" type="text" v-model="confirmInterviewComment">
+          	<!-- 学生备注填写 -->
+            备注信息： <textarea style="width: 100%;resize: none;" v-model="confirmInterviewComment"></textarea>
           </div>
         </div>
 
@@ -102,7 +114,7 @@
     </div>
 
     <div class="modal-confirm-rating xsx-form-theme" v-show="isConfirmRatingModalOpen">
-      <!-- 确认面试时间 -->
+      <!-- 学生评价企业 -->
       <div class="content">
         <div class="content-title row align-center">
           评价
@@ -151,6 +163,7 @@
     { title: '实习中', tag: [mapResumeState.WORKING], },
     { title: '已结束', tag: [mapResumeState.COMMENTED, mapResumeState.ENDED], },
     { title: '未录用', tag: [mapResumeState.CANCELED], },
+    { title: '所有记录', tag: [mapResumeState.HISTORY], },
   ]
   function parseTabbarTitleCount (dict, titleList = tabbarTitle) {
     let d = {}
@@ -230,7 +243,7 @@
     },
     methods: {
       getResumeCount () {
-        let url = ReqUrl.StudentSubUrl.resumeCount(0)
+        let url = ReqUrl.StudentSubUrl.resumeCount(0) // http://127.0.0.1:8080/backend/api/students/0/resumes/count
         Req.Get(
           url,
           null,
@@ -271,10 +284,10 @@
         let type = joinTag(tab.tag)
 
         let title = tab.title
-        this.lastCountDict[title] = this.countDict[title]
-        this.getResumeCount()
+        this.lastCountDict[title] = this.countDict[title] // 设置相等
+        this.getResumeCount() // 发送请求
 
-        this.loadData(type)
+        this.loadData(type) // 重新加载数据对象
       },
       // 转换简历状态
       translateStateText (text, commentStu) {
@@ -288,6 +301,7 @@
           ENDED: ['评价'],
           CANCELED: ['未录用'],
           COMMENTED: ['已评价'],
+          HISTORY: ['已投递'],
         }
         if (text === 'ENDED' && commentStu === '学生已评价') {
           return ['已评价']
@@ -409,13 +423,14 @@
         }
 
         let interviewTime = this.confirmInterviewTime
-        let commentStu = this.confirmInterviewComment
+        let remarkStu = this.confirmInterviewComment // 学生备注填写  // let commentStu = this.confirmInterviewComment
         let url = ReqUrl.Resume.editResumeItem(this.handlingItemId)
 
         Req.Put(url, {
           state: 'WAIT_COMP_CONFIRM',
           interviewTime,
-          commentStu,
+          // commentStu,
+          remarkStu,
         }, res => {
           alert(`操作成功：已修改面试时间，请等待企业确认。`)
           this.closeConfirmInterviewModal()
@@ -490,7 +505,7 @@
     },
   }
 
-  function joinTag (list) {
+  function joinTag (list) { // 拼接url参数
     return `state=${list.join('&state=')}`
   }
   function getPositionItem (positionId, cbfn) {
@@ -566,7 +581,7 @@
 
       .tabbar-item {
         float: left;
-        padding: 0 20px;
+        padding: 0 15px;
         border-right: 1px solid #E5E6EB;
 
         .num {

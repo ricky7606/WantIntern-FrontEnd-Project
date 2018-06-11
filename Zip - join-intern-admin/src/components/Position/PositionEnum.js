@@ -4,6 +4,23 @@ export const mapReqEdu = {
   MASTER: '硕士',
   PHD: '博士',
 }
+export const TabbarResumeSta = {
+  NEW: '已投递',
+  WAIT_STU_CONFIRM: '待学生确认',
+  WAIT_COMP_CONFIRM: '待企业查看',
+  CONFIRMED: '已查看',
+  OFFERED: '待入职',
+  WORKING: '已入职',
+  ENDED: '实习结束',
+  CANCELED: '被拒绝',
+  COMMENTED: '待评论',
+}
+export const mapReqEduNum = {
+  COLLEGE: '0',
+  BACHELOR: '1',
+  MASTER: '2',
+  PHD: '3',
+}
 export const eduEnumList = [
   { value: 'BACHELOR', title: '本科' },
   { value: 'COLLEGE', title: '专科' },
@@ -57,6 +74,12 @@ export const PositionEnum = [
     key: 'addr',
     title: '工作地址',
     type: 'String',
+  },
+  {
+    key: 'ptype',
+    title: '职位类型',
+    type: 'Enum',
+    enumList: [],
   },
   {
     key: 'startDate',

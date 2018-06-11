@@ -1,12 +1,12 @@
 // const BASE_URL = 'http://yegames.cn:8080/api'
 // const BASE_URL = 'http://x.xiangshixi.cc:8080/api'
-let BASE_URL = `${location.origin}/backend/api`
-if (location.host.indexOf('localhost') !== -1) {
-  // BASE_URL = 'http://yegames.cn:8080/api'
-  // BASE_URL = 'http://x.xiangshixi.cc:8080/api'
-  BASE_URL = 'http://www.xiangshixi.com/backend/api'
-}
-
+// let BASE_URL = `${location.origin}/backend/api`
+// if (location.host.indexOf('localhost') !== -1) {
+//   // BASE_URL = 'http://yegames.cn:8080/api'
+//   // BASE_URL = 'http://x.xiangshixi.cc:8080/api'
+//   BASE_URL = 'http://www.xiangshixi.com/backend/api'
+// }
+let BASE_URL = 'http://127.0.0.1:8080/backend/api'
 function joinUrl (relativeUrl) {
   if (relativeUrl.indexOf('/') !== 0) relativeUrl = `/${relativeUrl}`
   return `${BASE_URL}${relativeUrl}`
@@ -43,6 +43,7 @@ export const StudentSubUrl = {
     let relativeUrl = `${URL_STUDENT}/${studentId}`
     return joinUrl(relativeUrl)
   },
+
 }
 
 export const Company = {
@@ -144,7 +145,11 @@ export const Resume = {
     let relativeUrl = `/students/${studentId}/resumes`
     return joinUrl(relativeUrl)
   },
-
+  // 获取学生投递的职位信息
+  getPositionsOfStudent (studentId) {
+    let relativeUrl = `/resumes/${studentId}/positions`
+    return joinUrl(relativeUrl)
+  },
   // 获取企业收到的简历信息
   getResumesOfCompany (companyId) {
     let relativeUrl = `companies/${companyId}/resumes`
@@ -265,8 +270,12 @@ export const Account = {
     let relativeUrl = '/withdraws'
     return joinUrl(relativeUrl)
   },
-  putWithdraws (id) {
+  putWithdraws (id) { // 提现审批操作
     let relativeUrl = `/withdraws/${id}`
+    return joinUrl(relativeUrl)
+  },
+  queryExistence (id) { // 统计
+    let relativeUrl = `/withdraws/Count/${id}`
     return joinUrl(relativeUrl)
   },
 }

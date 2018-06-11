@@ -52,7 +52,7 @@
       return {
         account: '',
         password: '',
-        isProcessing: false,
+        isProcessing: false, // 设置填写状态为false
       }
     },
     components: {
@@ -70,7 +70,7 @@
           Req.Post(ReqUrl.StudentSubUrl.login(),
             {
               phone: account,
-              password,
+              password, // client_pc端可以
             },
             res => {
               if (res.frozen) {

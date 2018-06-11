@@ -103,6 +103,7 @@
           {
             pageSize,
             pageIndex,
+            active: true,
           },
           res => {
             that.positionList = res.items
@@ -123,6 +124,7 @@
 
             pageSize: DEFAULT_PAGE_SIZE,
             pageIndex: 1,
+            active: true,
             // industry: this.INDUSTRY.selected === '不限' ? null : this.INDUSTRY.selected,
             // type: this.COMPANY_TYPE.selected === '不限' ? null : this.COMPANY_TYPE.selected,
             // verified: this.shouldVerified || undefined,
@@ -149,6 +151,7 @@
             type: this.COMPANY_TYPE.selected === '不限' ? null : this.COMPANY_TYPE.selected,
             keyword: this.searchKeyWord,
             verified: this.shouldVerified || undefined,
+            active: true,
 
             ...params,
           },
@@ -177,6 +180,7 @@
           {
             pageSize: DEFAULT_PAGE_SIZE,
             pageIndex: nextIndex,
+            active: true,
           },
           res => {
             that.positionList = [...that.positionList, ...res.items]

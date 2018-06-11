@@ -15,6 +15,7 @@
             <div class="row space-between">
               <div class="left col">
                 <!-- <div class="title col">{{item.title}}</div> -->
+                <!-- 收藏职位a标签 -->
                 <a class="col title hover-color" v-if="item.company"
                   target="_blank"
                   :href="`/#/PositionInfo/${item.id}`">
@@ -28,13 +29,13 @@
             </div>
             <div class="row space-between">
               <div class="left row">
-                <a class="col company-name" v-if="item.company"
+                <a class="col major" v-if="item.company"
                   target="_blank"
                   :href="`/#/CompanyInfo/${item.company.id}`">
                   {{ item.company.name }} |
                 </a>
                 <span class="col degree">{{mapReqEdu[item.reqEdu]}}</span>
-                <span class="col major">{{item.reqMajor}}</span>
+                <!-- <span class="col major">{{item.reqMajor}}</span> --> <!-- 无数据 -->
               </div>
               <!-- <div class="company-info right" v-if="item && item.company">
                   {{ item.company.name }}

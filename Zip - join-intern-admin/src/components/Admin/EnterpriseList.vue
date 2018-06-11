@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="news-list xsx-form-theme">
-    <div class="flex-row" v-show="!isRichTextEditing">
+    <div class="flex-row" v-show="isRichTextEditing === '1'">
       <div class="align-left">
         <a :href="outputExcelUrl()" target="_blank">
           <div class="output-box btn col plain">
@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="list align-center">
-      <table v-show="!isRichTextEditing">
+      <table v-show="isRichTextEditing === '1'">
         <tr>
           <th>账号</th>
           <th>手机号</th>
@@ -144,6 +144,10 @@
                 @click="deleteItem(newsItem, false)">
                 启用
               </div>
+              <div class="btn col plain"
+              	@click="queryComPosition(newsItem)">
+              	查看职位
+              </div>
             </td>
             <td class="action">
               <div class="btn col plain btn-enable contain-btn"
@@ -162,7 +166,7 @@
       </table>
 
       <page-index v-if="list.length > 0"
-                  v-show="!isRichTextEditing"
+                  v-show="isRichTextEditing === '1'"
                   :total="pagination.total"
                   :current="pagination.current"
                   @change="pageIndexChange"/>
@@ -172,7 +176,11 @@
       <enterprise-editor :content="editingContent"
                          @close="closeSubpage"
                          @update="updateData"
-                         v-if="isRichTextEditing" />
+                         v-if="isRichTextEditing === '2'" />
+      <com-position-list :content="editingContent"
+                         @close="closeSubpage"
+                         @update="updateData"
+                         v-if="isRichTextEditing === '3'" />
     </div>
   </div>
 </template>
@@ -182,23 +190,25 @@
   import * as ReqUrl from '@/api/url.js'
   import PageIndex from '@/components/Utils/PageIndex.vue'
   import { ParsePagination } from '@/utils/helper-functions.js'
-  import EnterpriseEditor from '@/components/Admin/EnterpriseEditor.vue'
+  import EnterpriseEditor from '@/components/Admin/EnterpriseEditor.vue' // 引入企业修改页面
+  import ComPositionList from '@/components/Admin/ComPositionList.vue'
   import * as AdminDataProxy from '@/components/Admin/proxy.js'
 
   export default {
     name: 'EnterpriseList',
     data () {
       return {
-        pagination: {
+        pagination: { // 当前页码信息
           current: 1,
           total: 1,
           pagesize: 12,
         },
-        list: [],
-        promotedList: [],
+        list: [], // 结果集合
+        promotedList: [], // 推荐企业集合
 
-        isRichTextEditing: false,
-        editingContent: {},
+        isRichTextEditing: '1',
+        editingContent: {}, // 传参对象
+        toPosition: false,
 
         isSearchOpen: false,
         keyword: '',
@@ -270,6 +280,7 @@
     components: {
       PageIndex,
       EnterpriseEditor,
+      ComPositionList,
     },
     methods: {
       onSelectChange (ev, type) {
@@ -311,7 +322,7 @@
           }
         })
       },
-      getData ({pageIndex, pageSize}) {
+      getData ({pageIndex, pageSize}) { // 获取数据列表信息
         Req.Get(ReqUrl.Admin.getCompanyList(), {
           pageIndex: pageIndex || 1,
           pageSize: pageSize || 20,
@@ -339,11 +350,16 @@
           pageSize: this.pagination.pagesize
         })
       },
-      parseData (res) {
-        this.list = res.items
-        this.pagination = ParsePagination(res.pagination)
+      queryComPosition (item) {
+        // alert('toQueryComPosition()')
+        this.editingContent = item
+        this.isRichTextEditing = '3'
+        this.isSearchOpen = false
       },
-
+      parseData (res) { // 填充结果数据
+        this.list = res.items
+        this.pagination = ParsePagination(res.pagination) // 填充页码
+      },
       createItem () {
         this.editingContent = {
           title: '',
@@ -351,11 +367,11 @@
           content: '',
           id: 'newCreated',
         }
-        this.isRichTextEditing = true
+        this.isRichTextEditing = '2'
       },
       editItem (item) {
         this.editingContent = item
-        this.isRichTextEditing = true
+        this.isRichTextEditing = '2'
       },
       deleteItem (item, cmd) {
         // 禁用
@@ -396,7 +412,7 @@
         }
       },
       closeSubpage () {
-        this.isRichTextEditing = false
+        this.isRichTextEditing = '1'
       },
 
       saveNewsItem (data = {}, cbfn = x => x) {

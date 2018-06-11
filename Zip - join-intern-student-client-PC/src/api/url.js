@@ -6,7 +6,7 @@ if (location.host.indexOf('localhost') !== -1) {
   BASE_URL = '//www.xiangshixi.com/backend/api'
   // BASE_URL = 'http://yegames.cn:8080/api'
 }
-
+// let BASE_URL = 'http://127.0.0.1:8080/backend/api'
 function joinUrl (relativeUrl) {
   if (relativeUrl.indexOf('/') !== 0) relativeUrl = `/${relativeUrl}`
   return `${BASE_URL}${relativeUrl}`

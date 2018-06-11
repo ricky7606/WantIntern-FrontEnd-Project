@@ -20,7 +20,6 @@ export const TabbarResume = [
     value: 0,
   },
 ]
-
 export const TabbarInterns = [
   {
     title: '在职学生',

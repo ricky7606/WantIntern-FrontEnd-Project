@@ -202,12 +202,14 @@
         let url = ReqUrl.StudentSubUrl.getItem(0)
         Req.Get(url, undefined, res => {
           this.isLogin = true
+          // alert('isLogin ' + this.isLogin)
 
           this.dataCopy = res
           cbfn(res)
         }, fail => {
           if (fail.response.data.status === 401) {
             this.isLogin = false
+            // alert('isLogin ' + this.isLogin)
             // alert('未登录')
             // this.$router.push({
             //   name: 'Login'

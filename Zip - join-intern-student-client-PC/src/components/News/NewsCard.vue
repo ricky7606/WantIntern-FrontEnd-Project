@@ -8,7 +8,7 @@
         <span class="sep degree">{{mapReqEdu[job.reqEdu]}}</span>
         <span class="sep major">{{job.reqMajor}}</span>
       </div> -->
-      <div class="html-content" v-text="getContent(job.content)">
+      <div class="html-content" v-text="getContent(job.content)"> <!-- 展示title -->
       </div>
       <div class="footer flex-row">
         <div class="flex-row pub-time">
@@ -122,7 +122,7 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-
+      
     }
     .pub-time {
       font-family: PingFangSC-Regular;

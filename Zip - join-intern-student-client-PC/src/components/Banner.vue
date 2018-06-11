@@ -4,7 +4,8 @@
       <div class="swiper-slide" v-for="(item, index) in list">
         <div class="swiper-zoom-container">
           <a :href="item && parseUrl(item.url)" target="_blank" >
-            <img :src="parseImgUrl(item.img)">
+             <img :src="parseImgUrl(item.img)" style="width: 100%;height: 100%;"><!--  -->
+            	<!-- <img :src="parseImgUrl(item.img)"> -->
           </a>
         </div>
       </div>

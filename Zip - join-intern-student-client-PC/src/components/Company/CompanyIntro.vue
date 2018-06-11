@@ -5,6 +5,7 @@
         <div class="part-title">
           {{part.title}}
         </div>
+        <!-- 企业视频介绍 回显 -->
         <div class="part-content video-box" v-if="part.title === '视频介绍' && part.content !== '未填写'">
           <video :src="part.content" controls v-if="isMediaUrl(part.content)"></video>
           <div v-html="part.content"></div>
@@ -26,7 +27,7 @@
       return {}
     },
     methods: {
-      isMediaUrl (str) {
+      isMediaUrl (str) { // 视频文件 匹配
         if (!str) return false
 
         let mediaSubfix = [

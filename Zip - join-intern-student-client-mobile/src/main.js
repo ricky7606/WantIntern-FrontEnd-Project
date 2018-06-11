@@ -26,6 +26,7 @@ function parseAsRelativePath (str) {
   let host = location.origin
   if (host.indexOf('localhost') !== -1) {
     host = '//www.xiangshixi.com'
+    // host = '//127.0.0.1:8080'
   } else {
     host = ''
   }

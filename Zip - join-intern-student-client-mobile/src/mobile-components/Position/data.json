@@ -51,6 +51,8 @@
       },
       "stuSalary": 150,
       "createTime": "2017-10-01 08:00:00"
+      "remarkComp": "string"
+      "remarkStu": "string"
     }
   ]
 }

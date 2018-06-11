@@ -115,8 +115,6 @@
         hotWords: hotWords.split(','),
         companyCategory: [
           '银行', '证券', '保险', '信托', '投行', '私募基金',
-          // '银行', '证券', '保险', '信托', '投行', '私募基金',
-          // '银行', '证券', '保险', '信托', '投行', '私募基金',
         ],
         categoryMode: 'less',
         INDUSTRY: {
@@ -188,7 +186,7 @@
         pageSize = params.pagesize
         pageIndex = params.pageindex
       }
-      that.getData(pageSize, pageIndex)
+      that.getData(pageSize, pageIndex) // 第一次加载职位
 
       if (route.name === 'Home.Detail') {
         // 查看搜索

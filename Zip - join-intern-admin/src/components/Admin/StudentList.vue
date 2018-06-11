@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="news-list xsx-form-theme">
-    <div class="flex-row" v-show="!isRichTextEditing">
+    <div class="flex-row" v-show="isRichTextEditing === '1'">
       <div class="align-left">
         <a :href="outputExcelUrl()" target="_blank">
           <div class="output-box btn col plain">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="flex-row search-bar" v-if="isSearchOpen" v-show="!isRichTextEditing">
+    <div class="flex-row search-bar" v-if="isSearchOpen" v-show="isRichTextEditing === '1'">
       <div class="align-left">
         <div class="filter-row">
           <div class="col filter-title">下载表格筛选条件：</div>
@@ -78,7 +78,7 @@
     </div>
 
     <div class="list align-center">
-      <table v-show="!isRichTextEditing">
+      <table v-show="isRichTextEditing === '1'">
         <tr>
           <th>注册账号</th>
           <th>手机号</th>
@@ -121,13 +121,17 @@
                 @click="deleteItem(newsItem, false)">
                 启用
               </div>
+              <div class="btn col plain btn-edit"
+              	@click="querySutPosition(newsItem)">
+                查看投递
+              </div>
             </td>
           </tr>
         </template>
       </table>
 
       <page-index v-if="list.length > 0"
-                  v-show="!isRichTextEditing"
+                  v-show="isRichTextEditing === '1'"
                   :total="pagination.total"
                   :current="pagination.current"
                   @change="pageIndexChange"/>
@@ -137,7 +141,11 @@
       <student-editor :content="editingContent"
                          @close="closeSubpage"
                          @update="updateData"
-                         v-if="isRichTextEditing" />
+                         v-if="isRichTextEditing === '2'" />
+      <stu-position-list :content="editingContent"
+                         @close="closeSubpage"
+                         @update="updateData"
+                         v-if="isRichTextEditing === '3'" />
     </div>
   </div>
 </template>
@@ -148,6 +156,7 @@
   import PageIndex from '@/components/Utils/PageIndex.vue'
   import { ParsePagination } from '@/utils/helper-functions.js'
   import StudentEditor from '@/components/Admin/StudentEditor.vue'
+  import StuPositionList from '@/components/Admin/StuPositionList.vue'
   import { mapReqGender, mapReqLangLevel, mapReqEdu, eduEnumList, genderEnumList } from '@/components/Position/PositionEnum.js'
   import moment from 'moment'
 
@@ -162,7 +171,7 @@
         },
         list: [],
 
-        isRichTextEditing: false,
+        isRichTextEditing: '1',
         editingContent: {},
 
         mapReqGender,
@@ -188,8 +197,14 @@
     components: {
       PageIndex,
       StudentEditor,
+      StuPositionList,
     },
     methods: {
+      querySutPosition (item) {
+        this.editingContent = item
+        this.isRichTextEditing = '3'
+        this.isSearchOpen = false
+      },
       toggleSearch () {
         this.isSearchOpen = !this.isSearchOpen
 
@@ -226,7 +241,6 @@
         })
       },
       getData ({pageIndex, pageSize}) {
-        // 资讯
         Req.Get(ReqUrl.Admin.getStudents(), {
           pageIndex: pageIndex || 1,
           pageSize: pageSize || 20,
@@ -266,11 +280,11 @@
           content: '',
           id: 'newCreated',
         }
-        this.isRichTextEditing = true
+        this.isRichTextEditing = '2'
       },
       editItem (item) {
         this.editingContent = item
-        this.isRichTextEditing = true
+        this.isRichTextEditing = '2'
       },
       deleteItem (item, cmd) {
         // 禁用
@@ -293,7 +307,7 @@
         })
       },
       closeSubpage () {
-        this.isRichTextEditing = false
+        this.isRichTextEditing = '1'
       },
       outputExcelUrl () {
         let url = ReqUrl.StudentSubUrl.outputExcel()

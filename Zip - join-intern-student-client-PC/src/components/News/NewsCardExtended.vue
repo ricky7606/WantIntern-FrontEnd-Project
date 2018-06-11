@@ -134,6 +134,13 @@
     .left {
       flex-grow: 1;
     }
+    .flex-col { // 解决ie文字不换行问题
+    	width: 100%;
+    	height: 100%;
+    	// white-space: pre-wrap;
+    	word-wrap:break-word;
+    	word-break:break-all;
+    }
     .job-title {
       font-family: PingFangSC-Medium;
       font-size: 22px;

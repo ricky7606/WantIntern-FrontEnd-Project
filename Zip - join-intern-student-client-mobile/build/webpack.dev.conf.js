@@ -31,12 +31,12 @@ module.exports = merge(baseWebpackConfig, {
       chunks: ['vendor', 'manifest', 'app'],
       inject: true
     }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'auth.html',
-    //   template: 'auth.html',
-    //   chunks: ['vendor', 'manifest', 'auth'],
-    //   inject: true
-    // }),
+//  new HtmlWebpackPlugin({  // 原本为注释
+//    filename: 'auth.html',
+//    template: 'auth.html',
+//    chunks: ['vendor', 'manifest', 'auth'],
+//    inject: true
+//  }),
     new FriendlyErrorsPlugin()
   ]
 })

@@ -38,8 +38,8 @@
             </div>
             <div class="row space-between">
               <div class="left col">
+              	<span class="col major">{{item.position.company.name}} |</span>
                 <span class="col degree">{{mapReqEdu[item.position.reqEdu]}}</span>
-                <span class="col major">{{item.position.reqMajor}}</span>
               </div>
               <!-- 面试信息 -->
               <div class="right col interview-msg" v-show="showInterviewMsg(item)">
@@ -47,7 +47,7 @@
                 <span class="row">面试地点：{{ item.interviewPlace }}</span>
                 <span class="row"> 联系人： {{ item.contact }}</span>
                 <span class="row">联系电话：{{ item.contactPhone }}</span>
-                <span class="row" v-if="item.commentComp">备注信息：{{ item.commentComp }}</span>
+                <span class="row" v-if="item.remarkComp">备注信息：{{ item.remarkComp }}</span>
               </div>
               <!-- Offer信息 -->
               <div class="right col offer-msg" v-show="showOfferMsg(item)">
@@ -55,11 +55,14 @@
                 <span class="row">报到地点：{{ item.offerPlace }}</span>
                 <span class="row">联系人： {{ item.contact }}</span>
                 <span class="row">联系电话：{{ item.contactPhone }}</span>
-                <span class="row" v-if="item.commentComp">备注信息：{{ item.commentComp }}</span>
+                <!-- <span class="row" v-if="item.remarkComp">备注信息：{{ item.remarkComp }}</span> -->
               </div>
             </div>
-            <div class="row time">
-              {{item.createTime}}
+            <div class="row time" v-if="item.offerTime === null">
+              {{item.createTime}} 发布
+            </div>
+            <div class="row time" v-if="item.offerTime !== null">
+              {{item.offerTime}} 开始实习
             </div>
           </div>
         </template>
@@ -79,7 +82,8 @@
           <date-time-selector v-model="confirmInterviewTime"/>
 
           <div class="row">
-            备注信息： <input style="width: 100%;" type="text" v-model="confirmInterviewComment">
+            备注信息： <!-- <input style="width: 100%;" type="text" v-model="confirmInterviewComment"> -->
+            <textarea style="width: 100%;resize: none;" v-model="confirmInterviewComment"></textarea>
           </div>
         </div>
 
@@ -349,13 +353,13 @@
         }
 
         let interviewTime = this.confirmInterviewTime
-        let commentStu = this.confirmInterviewComment
+        let remarkStu = this.confirmInterviewComment
         let url = ReqUrl.Resume.editResumeItem(this.handlingItemId)
 
         Req.Put(url, {
           state: 'WAIT_COMP_CONFIRM',
           interviewTime,
-          commentStu,
+          remarkStu,
         }, res => {
           alert(`操作成功：已修改面试时间，请等待企业确认。`)
           this.closeConfirmInterviewModal()

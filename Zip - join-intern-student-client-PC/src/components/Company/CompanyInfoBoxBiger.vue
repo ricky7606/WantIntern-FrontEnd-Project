@@ -41,7 +41,7 @@
         return str && str.indexOf('http') === 0
       },
       parseLink (link) {
-        if (!link) return ''
+        if (link === '(未填写)' || !link) return 'javascript:void(0)'
         return link.indexOf('http') === 'http' ? link : `http://${link}`
       },
     },
